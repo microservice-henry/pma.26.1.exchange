@@ -1,0 +1,8 @@
+services:
+  exchange:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-secret}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
