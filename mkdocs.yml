@@ -1,0 +1,28 @@
+site_name: Exchange API - PMA 26.1
+site_description: Documentação do projeto Exchange API
+site_author: Hnery Idesis, Nathan Benaion, Kauã Makiyama
+
+theme:
+  name: material
+  language: pt
+  palette:
+    primary: indigo
+    accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Projeto: projeto.md
+  - Atividades: atividades.md
+  - Gargalos: gargalos.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - admonition
+  - tables
