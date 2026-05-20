@@ -1,28 +1,84 @@
-site_name: Exchange API - PMA 26.1
-site_description: Documentação do projeto Exchange API
-site_author: Hnery Idesis, Nathan Benaion, Kauã Makiyama
+site_name: Exchange API — PMA 26.1
+site_author: Henry Idesis, Nathan Benaion, Kauã Makiyama
+site_url: https://microservice-henry.github.io/pma.26.1.exchange
+repo_url: https://github.com/microservice-henry/pma.26.1.exchange
+repo_name: microservice-henry/pma.26.1.exchange
 
 theme:
   name: material
   language: pt
   palette:
-    primary: indigo
-    accent: indigo
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Mudar para modo escuro
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Mudar para modo claro
   features:
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - content.tooltips
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.top
+    - navigation.path
+    - navigation.tracking
     - navigation.tabs
     - navigation.sections
-    - content.code.copy
+  icon:
+    admonition:
+      note: fontawesome/solid/note-sticky
+      info: fontawesome/solid/circle-info
+      tip: fontawesome/solid/bullhorn
+      success: fontawesome/solid/check
+      warning: fontawesome/solid/triangle-exclamation
+      danger: fontawesome/solid/skull
+      example: fontawesome/solid/flask
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - footnotes
+  - tables
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+  - glightbox
+  - git-revision-date-localized:
+      enable_creation_date: true
 
 nav:
   - Home: index.md
   - Projeto: projeto.md
   - Atividades: atividades.md
   - Gargalos: gargalos.md
-
-markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
-  - admonition
-  - tables
