@@ -22,7 +22,7 @@
 - [x] Roteiro 2 — Integração com AwesomeAPI e containerização Docker
 - [x] Roteiro 3 — Cache com Redis e endpoint de health-check
 - [x] Roteiro 4 — Testes automatizados e deploy via GitHub Actions
-- [ ] Apresentação em vídeo
+- [x] Apresentação em vídeo
 
 ---
 
@@ -137,9 +137,7 @@ sequenceDiagram
 
 ## Vídeo de Apresentação
 
-<!-- Substituir o link abaixo pelo vídeo de apresentação do grupo -->
-
-> Vídeo disponível em: [link do vídeo]()
+[https://youtu.be/zGQpPKkvC_w](https://youtu.be/zGQpPKkvC_w){:target='_blank'}
 
 ---
 

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\Kauã\\\\Desktop\\\\5 semestre\\\\pma.26.1.exchange\" -Recurse -Force | Select-Object FullName | Sort-Object FullName | ForEach-Object { $_.FullName })",
+      "Bash(pip install *)",
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python -c \"import redis.asyncio; print\\('ok'\\)\")",
+      "Bash(python -c \"import sys; print\\(sys.executable, sys.path\\)\")",
+      "Bash(python -m pip install -q redis pytest pytest-asyncio httpx)",
+      "Bash(del tests\\\\test_router.py)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "WebFetch(domain:hsandmann.github.io)"
+    ]
+  }
+}
