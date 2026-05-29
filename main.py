@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, Query, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
 import httpx
@@ -51,6 +51,73 @@ def validar_token(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         )
+
+
+@app.get("/exchange")
+async def cotacao_interna(
+    from_: str = Query(alias="from"),
+    to: str = Query(),
+):
+    """Internal endpoint for service-to-service calls (no auth required)."""
+    if not CURRENCY_PATTERN.match(from_) or not CURRENCY_PATTERN.match(to):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Invalid currency code. Use 3-5 letter codes (e.g. USD, BRL, EUR).",
+        )
+
+    par = f"{from_.upper()}-{to.upper()}"
+    cache_key = f"exchange:rate:{par}"
+
+    r = await cache_conn()
+    if r:
+        try:
+            cached = await r.get(cache_key)
+            if cached:
+                data = json.loads(cached)
+                return {"rate": data["sell"]}
+        except Exception:
+            pass
+
+    url = f"https://economia.awesomeapi.com.br/json/last/{par}"
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(url, timeout=10.0)
+        except httpx.TimeoutException:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="Exchange API timeout",
+            )
+
+    if response.status_code != 200:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Currency pair not found"
+        )
+
+    data = response.json()
+    chave = par.replace("-", "")
+
+    if chave not in data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Currency pair not found"
+        )
+
+    taxa = data[chave]
+    sell = float(taxa["ask"])
+
+    armazenavel = {
+        "sell": sell,
+        "buy": float(taxa["bid"]),
+        "date": taxa["create_date"],
+        "cached": False,
+    }
+
+    if r:
+        try:
+            await r.setex(cache_key, CACHE_TTL, json.dumps(armazenavel))
+        except Exception:
+            pass
+
+    return {"rate": sell}
 
 
 @app.get("/exchanges/health-check")
